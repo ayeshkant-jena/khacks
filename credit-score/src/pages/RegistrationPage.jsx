@@ -1,8 +1,7 @@
-// registration.jsx
-
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios'; // Importing axios for API requests
 
 // Styled Components
 const Container = styled.div`
@@ -109,6 +108,7 @@ const RegistrationPage = () => {
     businessName: '',
     role: 'lender', // default role set to 'lender'
   });
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -124,36 +124,47 @@ const RegistrationPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { name, email, password, phone, businessName, role } = formData;
 
     // Basic validation
     if (!name || !email || !password || !phone || !businessName || !role) {
-      alert('Please fill in all fields.');
+      setErrorMessage('Please fill in all fields.');
       return;
     }
 
     // Email format validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      alert('Please enter a valid email address.');
+      setErrorMessage('Please enter a valid email address.');
       return;
     }
 
     // Password strength validation
     if (password.length < 6) {
-      alert('Password must be at least 6 characters long.');
+      setErrorMessage('Password must be at least 6 characters long.');
       return;
     }
 
-    // Successful registration simulation
-    console.log('Form submitted:', formData);
-    alert('Registration successful!');
+    try {
+      // Send registration request to Django API
+      const response = await axios.post('http://localhost:8000/auth/register/', formData);
 
-    // Redirect to login page
-    navigate('/');
+      // If successful, redirect to login page
+      if (response.status === 201) {
+        alert('Registration successful!');
+        navigate('/login');
+      }
+    } catch (error) {
+      // Handle errors (e.g., user already exists)
+      if (error.response && error.response.data) {
+        setErrorMessage(error.response.data.error || 'An error occurred during registration.');
+      } else {
+        setErrorMessage('An error occurred. Please try again later.');
+      }
+    }
   };
 
   return (
@@ -163,13 +174,11 @@ const RegistrationPage = () => {
       </Header>
       <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '1120px' }}>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'space-between', width: '100%' }}>
-          {[
-            { name: 'name', placeholder: 'Name', icon: 'mdi-rena.png' },
+          {[{ name: 'name', placeholder: 'Name', icon: 'mdi-rena.png' },
             { name: 'email', placeholder: 'Email', icon: 'mdi-emai.png' },
             { name: 'password', placeholder: 'Password', icon: 'carbon-p.png' },
             { name: 'phone', placeholder: 'Phone', icon: 'mdi-ligh.png' },
-            { name: 'businessName', placeholder: 'Business Name', icon: 'mdi-busi.png' },
-          ].map(({ name, placeholder, icon }) => (
+            { name: 'businessName', placeholder: 'Business Name', icon: 'mdi-busi.png' }].map(({ name, placeholder, icon }) => (
             <InputContainer key={name}>
               <Icon src={`https://dashboard.codeparrot.ai/api/image/Z52_Lg58MnUDluNS/${icon}`} alt={name} />
               <Input
@@ -206,6 +215,7 @@ const RegistrationPage = () => {
             </label>
           </div>
         </div>
+        {errorMessage && <p style={{ color: 'red', textAlign: 'center' }}>{errorMessage}</p>} {/* Display error message */}
         <div style={{ marginTop: '40px', textAlign: 'center' }}>
           <RegisterButton type="submit">
             <RegisterText>Register</RegisterText>

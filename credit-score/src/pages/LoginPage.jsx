@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios'; // Importing axios for API requests
 import userIcon from './user.png'; // Adjust the path as needed
 import userPass from './padlock.png';
 
@@ -103,26 +104,37 @@ const RegisterText = styled.p`
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  const storedCredentials = {
-    username: 'user123',
-    password: 'pass123',
-  };
-
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault(); // Prevent the default form submission
 
     if (!username || !password) {
-      alert('Please enter both username and password.');
+      setErrorMessage('Please enter both username and password.');
       return;
     }
 
-    if (username === storedCredentials.username && password === storedCredentials.password) {
-      alert('Login successful!');
-      navigate('/Dashboard');
-    } else {
-      alert('Invalid username or password. Please try again.');
+    try {
+      // Send login request to Django API
+      const response = await axios.post('http://localhost:8000/auth/login/', {
+        username: username,
+        password: password,
+      });
+
+      // Handle successful login
+      if (response.status === 200) {
+        alert('Login successful!');
+        // Redirect to the dashboard
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      // Handle errors (e.g., invalid credentials)
+      if (error.response && error.response.status === 400) {
+        setErrorMessage('Invalid username or password. Please try again.');
+      } else {
+        setErrorMessage('An error occurred. Please try again later.');
+      }
     }
   };
 
@@ -154,6 +166,8 @@ const LoginPage = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </InputWrapper>
+
+            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} {/* Display error message */}
 
             <LoginButton type="submit">Login</LoginButton>
           </form>
