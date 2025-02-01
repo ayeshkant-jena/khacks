@@ -194,7 +194,7 @@ const RegistrationPage = () => {
           </RegisterButton>
         </div>
         <p style={{ marginTop: '20px', textAlign: 'center' }}>
-          Already have an account? <Link to="/" style={{ color: 'blue' }}>Login Now</Link>
+          Already have an account? <Link to="/login" style={{ color: 'blue' }}>Login Now</Link>
         </p>
       </form>
     </Container>

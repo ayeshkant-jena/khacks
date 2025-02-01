@@ -33,91 +33,90 @@ const CreditScoreForm = () => {
 
   return (
     <div style={styles.container}>
-      <div style={styles.headerBackground} />
-      
-      <h1 style={styles.title}>
-        Fill the information and get credit score
-      </h1>
+      <div style={styles.contentCard}>
+        <h1 style={styles.headerTitle}>Credit Score Form</h1>
+        <h2 style={styles.title}>Fill the information and get your credit score</h2>
 
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <div style={styles.formRow}>
-          <div style={styles.inputContainer}>
-            <img src="https://dashboard.codeparrot.ai/api/image/Z53oDTRi7Jes38r0/tdesign.png" alt="" style={styles.icon} />
-            <input
-              type="text"
-              name="annualIncome"
-              placeholder="Annual income"
-              value={formData.annualIncome}
-              onChange={handleInputChange}
-              style={styles.input}
-            />
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <div style={styles.inputWrapper}>
+            <div style={styles.inputContainer}>
+              <img src="https://dashboard.codeparrot.ai/api/image/Z53oDTRi7Jes38r0/tdesign.png" alt="annual income icon" style={styles.icon} />
+              <input
+                type="text"
+                name="annualIncome"
+                placeholder="Annual income"
+                value={formData.annualIncome}
+                onChange={handleInputChange}
+                style={styles.input}
+              />
+            </div>
+            <div style={styles.fileContainer}>
+              <input
+                type="file"
+                name="annualCertificate"
+                onChange={handleFileChange}
+                style={styles.fileInput}
+              />
+            </div>
           </div>
-          <div style={styles.fileContainer}>
-            <input
-              type="file"
-              name="annualCertificate"
-              onChange={handleFileChange}
-              style={styles.fileInput}
-            />
-          </div>
-        </div>
 
-        <div style={styles.formRow}>
-          <div style={styles.inputContainer}>
-            <img src="https://dashboard.codeparrot.ai/api/image/Z53oDTRi7Jes38r0/qlementi.png" alt="" style={styles.icon} />
-            <input
-              type="text"
-              name="totalExpenses"
-              placeholder="Total expenses"
-              value={formData.totalExpenses}
-              onChange={handleInputChange}
-              style={styles.input}
-            />
+          <div style={styles.inputWrapper}>
+            <div style={styles.inputContainer}>
+              <img src="https://dashboard.codeparrot.ai/api/image/Z53oDTRi7Jes38r0/qlementi.png" alt="expenses icon" style={styles.icon} />
+              <input
+                type="text"
+                name="totalExpenses"
+                placeholder="Total expenses"
+                value={formData.totalExpenses}
+                onChange={handleInputChange}
+                style={styles.input}
+              />
+            </div>
+            <div style={styles.fileContainer}>
+              <input
+                type="file"
+                name="expensesFiles"
+                onChange={handleFileChange}
+                style={styles.fileInput}
+              />
+            </div>
           </div>
-          <div style={styles.fileContainer}>
-            <input
-              type="file"
-              name="expensesFiles"
-              onChange={handleFileChange}
-              style={styles.fileInput}
-            />
-          </div>
-        </div>
 
-        <div style={styles.formRow}>
-          <div style={styles.inputContainer}>
-            <img src="https://dashboard.codeparrot.ai/api/image/Z53oDTRi7Jes38r0/arcticon.png" alt="" style={styles.icon} />
-            <input
-              type="text"
-              name="existingDebts"
-              placeholder="Existing debts"
-              value={formData.existingDebts}
-              onChange={handleInputChange}
-              style={styles.input}
-            />
+          <div style={styles.inputWrapper}>
+            <div style={styles.inputContainer}>
+              <img src="https://dashboard.codeparrot.ai/api/image/Z53oDTRi7Jes38r0/arcticon.png" alt="debts icon" style={styles.icon} />
+              <input
+                type="text"
+                name="existingDebts"
+                placeholder="Existing debts"
+                value={formData.existingDebts}
+                onChange={handleInputChange}
+                style={styles.input}
+              />
+            </div>
+            <div style={styles.fileContainer}>
+              <input
+                type="file"
+                name="debtFiles"
+                onChange={handleFileChange}
+                style={styles.fileInput}
+              />
+            </div>
           </div>
-          <div style={styles.fileContainer}>
-            <input
-              type="file"
-              name="debtFiles"
-              onChange={handleFileChange}
-              style={styles.fileInput}
-            />
-          </div>
-        </div>
 
-        <button
-          type="submit"
-          style={styles.button}
-          onMouseOver={(e) => e.currentTarget.style.opacity = '0.8'}
-          onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
-        >
-          <span style={styles.buttonText}>
-            Get Your Credit Score
-          </span>
-          <img src="https://dashboard.codeparrot.ai/api/image/Z53oDTRi7Jes38r0/solar-ar.png" alt="" style={styles.buttonIcon} />
-        </button>
-      </form>
+          <div style={styles.buttonWrapper}>
+            <button
+              type="submit"
+              style={styles.button}
+              onMouseOver={(e) => e.currentTarget.style.opacity = '0.8'}
+              onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+            >
+              <span style={styles.buttonText}>Get Your Credit Score</span>
+              <img src="https://dashboard.codeparrot.ai/api/image/Z53oDTRi7Jes38r0/solar-ar.png" alt="arrow icon" style={styles.buttonIcon} />
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
@@ -128,86 +127,109 @@ const styles = {
     minHeight: '100vh',
     backgroundColor: '#f2f6ff',
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '40px 20px',
   },
-  headerBackground: {
-    width: '',
-    height: '199px',
-    backgroundColor: '#d9d9d9'
+  contentCard: {
+    width: '100%',
+    maxWidth: '800px',
+    backgroundColor: '#ffffff',
+    borderRadius: '12px',
+    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
+    padding: '30px 20px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  headerTitle: {
+    fontFamily: 'Poppins, sans-serif',
+    fontSize: '36px',
+    fontWeight: 700,
+    color: '#000000',
+    marginBottom: '20px',
   },
   title: {
     fontFamily: 'Poppins, sans-serif',
-    fontSize: '48px',
+    fontSize: '32px',
     fontWeight: 700,
     color: '#000000',
     textAlign: 'center',
-    margin: '64px 0'
+    marginBottom: '20px',
   },
   form: {
-    width: '1030px',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    gap: '40px'
+    gap: '20px',
   },
-  formRow: {
+  inputWrapper: {
+    width: '100%',
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    gap: '20px',
   },
   inputContainer: {
-    width: '370px',
-    padding: '10px',
-    backgroundColor: '#d9d9d9',
+    flex: 1,
     display: 'flex',
     alignItems: 'center',
-    gap: '15px'
+    gap: '15px',
+    backgroundColor: '#f8f8f8',
+    padding: '10px',
+    borderRadius: '8px',
   },
   fileContainer: {
-    width: '370px',
-    padding: '10px',
-    backgroundColor: '#d9d9d9',
+    flex: 1,
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#f8f8f8',
+    padding: '10px',
+    borderRadius: '8px',
   },
   icon: {
     width: '30px',
-    height: '30px'
+    height: '30px',
   },
   input: {
     border: 'none',
     background: 'transparent',
     fontFamily: 'Poppins, sans-serif',
-    fontSize: '20px',
-    opacity: 0.5,
-    width: '100%'
+    fontSize: '18px',
+    width: '100%',
+    outline: 'none',
   },
   fileInput: {
     fontFamily: 'Poppins, sans-serif',
-    fontSize: '20px',
-    opacity: 0.5,
-    width: '100%'
+    fontSize: '18px',
+    width: '100%',
+    outline: 'none',
+  },
+  buttonWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '20px',
   },
   button: {
-    width: '449px',
-    padding: '21px 64px',
+    width: '300px',
+    padding: '15px 30px',
     backgroundColor: '#ffed69',
     border: '2px solid #000000',
-    borderRadius: '100px',
+    borderRadius: '50px',
     display: 'flex',
     alignItems: 'center',
     gap: '10px',
     cursor: 'pointer',
-    marginTop: '40px'
   },
   buttonText: {
     fontFamily: 'Poppins, sans-serif',
-    fontSize: '32px',
-    color: '#000000'
+    fontSize: '18px',
+    fontWeight: 700,
+    color: '#000000',
   },
   buttonIcon: {
-    width: '57px',
-    height: '48px'
-  }
+    width: '24px',
+    height: '24px',
+  },
 };
 
 export default CreditScoreForm;

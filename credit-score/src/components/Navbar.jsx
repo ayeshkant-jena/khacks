@@ -1,12 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   const navStyles = {
     width: '100%',
     height: 'auto',
     display: 'flex',
     alignItems: 'center',
-    // padding: '0 80px',
     backgroundColor: '#fff'
   };
 
@@ -54,7 +56,6 @@ const Navbar = () => {
     background: '#FFED69',
     borderRadius: '100px',
     border: '2px solid #000000',
-    marginLeft: '5px 5px 5px auto',
     cursor: 'pointer',
     transition: 'all 0.3s ease'
   };
@@ -81,6 +82,10 @@ const Navbar = () => {
     e.currentTarget.style.backgroundColor = '#FFED69';
   };
 
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
   return (
     <nav style={navStyles}>
       <div style={logoStyles}>
@@ -99,7 +104,7 @@ const Navbar = () => {
         style={loginButtonStyles}
         onMouseEnter={handleLoginHover}
         onMouseLeave={handleLoginLeave}
-        onClick={() => console.log('Login clicked')}
+        onClick={handleLoginClick}
       >
         <span style={loginTextStyles}>Login</span>
         <img 
@@ -113,4 +118,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
