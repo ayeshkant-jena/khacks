@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'authentication',
     'api',
     'businessApi',
+    'bankruptcy',
 ]
 
 REST_FRAMEWORK = {

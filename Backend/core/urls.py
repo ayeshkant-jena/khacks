@@ -28,4 +28,5 @@ urlpatterns = [
     path('auth/', include('authentication.urls')),  # Authentication app URLs
     path('api/', include('api.urls')),  # Authentication app URLs
     path('api/business/', include('businessApi.urls')),  
+    path('bankruptcy/', include('bankruptcy.urls')),  # Bankruptcy app URLs
 ]
