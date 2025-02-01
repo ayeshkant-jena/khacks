@@ -49,9 +49,13 @@ class LoginView(APIView):
             access_token = str(refresh.access_token)
             refresh_token = str(refresh)
 
-            # Fetch user details
-            user_details = UserDetails.objects.get(user=user)
-            user_details_serializer = UserDetailsSerializer(user_details)
+            # Try to fetch user details; handle if missing
+            try:
+                user_details = UserDetails.objects.get(user=user)
+                user_details_serializer = UserDetailsSerializer(user_details)
+                user_details_data = user_details_serializer.data
+            except UserDetails.DoesNotExist:
+                user_details_data = None  # Set to None if no details exist
 
             return Response({
                 'message': 'Login successful!',
@@ -59,7 +63,7 @@ class LoginView(APIView):
                 'username': user.username,
                 'access_token': access_token,
                 'refresh_token': refresh_token,
-                'user_details': user_details_serializer.data  # Include user details
+                'user_details': user_details_data  # Return None if missing
             }, status=status.HTTP_200_OK)
-        
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

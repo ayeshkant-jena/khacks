@@ -95,3 +95,44 @@ class CreditScore(APIView):
         except Exception as e:
             return Response({'error': f'Prediction error: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from .serializers import BusinessInfoSerializer
+from .models import BusinessInfo
+from django.shortcuts import get_object_or_404
+
+# API to register a new business (POST) and get all businesses (GET)
+class BusinessListCreateView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        """Fetch all businesses"""
+        businesses = BusinessInfo.objects.all()
+        serializer = BusinessInfoSerializer(businesses, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        """Register a new business"""
+        serializer = BusinessInfoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                "message": "Business registered successfully!",
+                "business": serializer.data
+            }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# API to fetch details of a single business (GET)
+class BusinessDetailView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        """Fetch details of a single business by ID"""
+        business = get_object_or_404(BusinessInfo, pk=pk)
+        serializer = BusinessInfoSerializer(business)
+        return Response(serializer.data, status=status.HTTP_200_OK)
