@@ -103,13 +103,11 @@ const RegistrationPage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
-    username: '',
     email: '',
     password: '',
+    phone: '',
     businessName: '',
-    industry: '',
-    annualIncome: '',
-    phone: ''
+    role: 'lender', // default role set to 'lender'
   });
 
   const handleInputChange = (e) => {
@@ -122,17 +120,17 @@ const RegistrationPage = () => {
 
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { name, username, email, password, businessName, industry, annualIncome, phone } = formData;
+    const { name, email, password, phone, businessName, role } = formData;
 
     // Basic validation
-    if (!name || !username || !email || !password || !businessName || !industry || !annualIncome || !phone) {
+    if (!name || !email || !password || !phone || !businessName || !role) {
       alert('Please fill in all fields.');
       return;
     }
@@ -167,13 +165,10 @@ const RegistrationPage = () => {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'space-between', width: '100%' }}>
           {[
             { name: 'name', placeholder: 'Name', icon: 'mdi-rena.png' },
-            { name: 'username', placeholder: 'Username', icon: 'solar-us.png' },
             { name: 'email', placeholder: 'Email', icon: 'mdi-emai.png' },
             { name: 'password', placeholder: 'Password', icon: 'carbon-p.png' },
+            { name: 'phone', placeholder: 'Phone', icon: 'mdi-ligh.png' },
             { name: 'businessName', placeholder: 'Business Name', icon: 'mdi-busi.png' },
-            { name: 'industry', placeholder: 'Industry', icon: 'la-indus.png' },
-            { name: 'annualIncome', placeholder: 'Annual Income', icon: 'tdesign.png' },
-            { name: 'phone', placeholder: 'Phone', icon: 'mdi-ligh.png' }
           ].map(({ name, placeholder, icon }) => (
             <InputContainer key={name}>
               <Icon src={`https://dashboard.codeparrot.ai/api/image/Z52_Lg58MnUDluNS/${icon}`} alt={name} />
@@ -186,6 +181,30 @@ const RegistrationPage = () => {
               />
             </InputContainer>
           ))}
+
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ fontSize: '18px', marginRight: '10px' }}>Role:</label>
+            <label>
+              <input
+                type="radio"
+                name="role"
+                value="lender"
+                checked={formData.role === 'lender'}
+                onChange={handleInputChange}
+              />
+              Lender
+            </label>
+            <label style={{ marginLeft: '20px' }}>
+              <input
+                type="radio"
+                name="role"
+                value="borrower"
+                checked={formData.role === 'borrower'}
+                onChange={handleInputChange}
+              />
+              Borrower
+            </label>
+          </div>
         </div>
         <div style={{ marginTop: '40px', textAlign: 'center' }}>
           <RegisterButton type="submit">

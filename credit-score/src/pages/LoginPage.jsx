@@ -120,7 +120,7 @@ const LoginPage = () => {
 
     if (username === storedCredentials.username && password === storedCredentials.password) {
       alert('Login successful!');
-      navigate('/LandingPage');
+      navigate('/Dashboard');
     } else {
       alert('Invalid username or password. Please try again.');
     }
