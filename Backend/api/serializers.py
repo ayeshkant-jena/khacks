@@ -35,3 +35,24 @@ class ExternalDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExternalData
         fields = '__all__'
+
+class BusinessDocumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BusinessDocument
+        fields = ['id', 'business', 'document', 'uploaded_at']
+
+    def validate_document(self, value):
+        """ 
+        ✅ Validate uploaded file type (only CSV/PDF allowed).
+        ✅ Ensure file size does not exceed 5MB.
+        """
+        allowed_types = ['application/pdf', 'text/csv']
+        max_size = 5 * 1024 * 1024  # 5MB
+
+        if value.content_type not in allowed_types:
+            raise serializers.ValidationError("Only PDF or CSV files are allowed.")
+
+        if value.size > max_size:
+            raise serializers.ValidationError("File size must be less than 5MB.")
+
+        return value

@@ -31,3 +31,11 @@ class ExternalData(models.Model):
 
     def __str__(self):
         return f"External Data for {self.business.name}"
+
+class BusinessDocument(models.Model):
+    business = models.ForeignKey(BusinessInfo, on_delete=models.CASCADE, related_name="documents")
+    document = models.FileField(upload_to="business_documents/")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Document for {self.business.name} ({self.document.name})"
