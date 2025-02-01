@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -108,6 +109,7 @@ class BusinessHealthView(APIView):
 
         return Response(radar_data, status=status.HTTP_200_OK)
 
+
 class CalculateCreditScoreView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
@@ -116,11 +118,10 @@ class CalculateCreditScoreView(APIView):
         """
         Calculate and update the business credit score.
         """
-        business = BusinessInfo.objects.filter(id=business_id).first()
-        if not business:
-            return Response({"error": "Business not found"}, status=status.HTTP_404_NOT_FOUND)
+        # ✅ Fetch the business
+        business = get_object_or_404(BusinessInfo, id=business_id)
 
-        # ✅ Get financial data
+        # ✅ Get financial records (latest and previous year)
         financial_records = (
             IncomeExpense.objects.filter(business=business)
             .values("year")
@@ -132,20 +133,23 @@ class CalculateCreditScoreView(APIView):
             .order_by("-year")
         )
 
+        # ✅ Get external financial data (Assets, Liabilities, Loans, etc.)
         external_data = ExternalData.objects.filter(business=business).first()
-
         if not financial_records.exists() or not external_data:
-            return Response({"message": "Not enough financial data"}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"message": "Not enough financial data"},
+                status=status.HTTP_404_NOT_FOUND
+            )
 
-        # ✅ Convert Decimal values to float
+        # ✅ Extract latest and previous year records safely
         latest_year = financial_records[0]
         prev_year = financial_records[1] if len(financial_records) > 1 else None
 
-        latest_income = float(latest_year["total_income"])
-        latest_expenditure = float(latest_year["total_expenditure"])
-        latest_tax = float(latest_year["total_tax"])
+        latest_income = float(latest_year["total_income"]) if latest_year["total_income"] else 0
+        latest_expenditure = float(latest_year["total_expenditure"]) if latest_year["total_expenditure"] else 0
+        latest_tax = float(latest_year["total_tax"]) if latest_year["total_tax"] else 0
 
-        prev_income = float(prev_year["total_income"]) if prev_year else 0
+        prev_income = float(prev_year["total_income"]) if prev_year and prev_year["total_income"] else 0
         total_assets = float(external_data.total_assets) if external_data.total_assets else 0
         liabilities = float(external_data.liabilities) if external_data.liabilities else 0
         total_loans = float(external_data.total_loans) if external_data.total_loans else 0
@@ -172,11 +176,13 @@ class CalculateCreditScoreView(APIView):
             (0.15 * (1 - loan_dependency)) +
             (0.2 * tax_compliance)
         )
-
         credit_score = round(credit_score)  # Round to nearest integer
 
         # ✅ Update the ExternalData Table
         external_data.credit_score = credit_score
         external_data.save()
 
-        return Response({"business_id": business_id, "credit_score": credit_score}, status=status.HTTP_200_OK)
+        return Response(
+            {"business_id": business_id, "credit_score": credit_score},
+            status=status.HTTP_200_OK
+        )
