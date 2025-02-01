@@ -10,6 +10,10 @@ const CreditScoreForm = () => {
     debtFiles: null
   });
 
+  const [creditScore, setCreditScore] = useState(null);
+  const [eligibilityText, setEligibilityText] = useState('');
+  const [scoreColor, setScoreColor] = useState('');
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
@@ -26,9 +30,50 @@ const CreditScoreForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
+  const calculateCreditScore = () => {
+    const income = parseFloat(formData.annualIncome) || 0;
+    const expenses = parseFloat(formData.totalExpenses) || 0;
+    const debts = parseFloat(formData.existingDebts) || 0;
+
+    if (!formData.annualIncome || !formData.totalExpenses || !formData.existingDebts) {
+      setCreditScore(null); // Don't display score if any input is missing
+      return;
+    }
+
+    let baseScore = 600;
+
+    if (income >= 30000) {
+      baseScore += (income - 30000) / 1000;
+    }
+
+    if (expenses >= 15000) {
+      baseScore -= (expenses - 15000) / 2000;
+    }
+
+    if (debts >= 10000) {
+      baseScore -= (debts - 10000) / 1500;
+    }
+
+    baseScore = Math.max(300, Math.min(850, baseScore));
+
+    const finalScore = formData.annualCertificate || formData.expensesFiles || formData.debtFiles ? baseScore + 20 : baseScore;
+
+    setCreditScore(Math.round(finalScore));
+
+    // Set eligibility text and score color based on the credit score
+    if (finalScore < 600) {
+      setEligibilityText('Unfortunately, you are not eligible for a loan.');
+      setScoreColor('#f44336'); // Red
+    } else if (finalScore >= 600 && finalScore < 700) {
+      setEligibilityText('You are eligible for a basic loan with higher interest rates.');
+      setScoreColor('#ffeb3b'); // Yellow
+    } else if (finalScore >= 700 && finalScore < 800) {
+      setEligibilityText('You are eligible for a loan with moderate interest rates.');
+      setScoreColor('#ff9800'); // Orange
+    } else {
+      setEligibilityText('Congratulations! You are eligible for a loan with the best interest rates.');
+      setScoreColor('#4CAF50'); // Green
+    }
   };
 
   return (
@@ -37,7 +82,7 @@ const CreditScoreForm = () => {
         <h1 style={styles.headerTitle}>Credit Score Form</h1>
         <h2 style={styles.title}>Fill the information and get your credit score</h2>
 
-        <form onSubmit={handleSubmit} style={styles.form}>
+        <form onSubmit={(e) => { e.preventDefault(); calculateCreditScore(); }} style={styles.form}>
           <div style={styles.inputWrapper}>
             <div style={styles.inputContainer}>
               <img src="https://dashboard.codeparrot.ai/api/image/Z53oDTRi7Jes38r0/tdesign.png" alt="annual income icon" style={styles.icon} />
@@ -116,6 +161,16 @@ const CreditScoreForm = () => {
             </button>
           </div>
         </form>
+
+        {/* Display the credit score */}
+        {creditScore !== null && (
+          <div style={styles.scoreContainer}>
+            <h3>Your Credit Score is:</h3>
+            <p style={{ ...styles.creditScore, color: scoreColor }}>{creditScore}</p>
+            {/* Display eligibility text */}
+            <p style={styles.eligibilityText}>{eligibilityText}</p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -229,6 +284,22 @@ const styles = {
   buttonIcon: {
     width: '24px',
     height: '24px',
+  },
+  scoreContainer: {
+    marginTop: '20px',
+    textAlign: 'center',
+  },
+  creditScore: {
+    fontFamily: 'Poppins, sans-serif',
+    fontSize: '40px',
+    fontWeight: 700,
+  },
+  eligibilityText: {
+    fontFamily: 'Poppins, sans-serif',
+    fontSize: '20px',
+    fontWeight: 700,
+    color: '#000000',
+    marginTop: '15px',
   },
 };
 

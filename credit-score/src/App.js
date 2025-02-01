@@ -7,10 +7,8 @@ import RegistrationPage from './pages/RegistrationPage';
 import CreditScoreForm from './components/CreditScoreForm';
 import LandingPage from './pages/LandingPage';
 
-
 function App() {
   return (
-    
     <Router>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
