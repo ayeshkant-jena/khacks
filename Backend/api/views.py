@@ -6,6 +6,11 @@ import pandas as pd
 from django.http import HttpResponse
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from .serializers import *
+from .models import *
+from rest_framework import generics 
+from rest_framework.permissions import AllowAny
+
 
 def home(request):
     return HttpResponse("Welcome to the Credit Score Prediction API!")
@@ -89,3 +94,4 @@ class CreditScore(APIView):
 
         except Exception as e:
             return Response({'error': f'Prediction error: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
