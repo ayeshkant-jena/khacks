@@ -1,12 +1,15 @@
-import {React, React} from 'react';
+import {React} from 'react';
 import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard';
+import LandingPage from './pages/LandingPage';
+import Footer from './components/Footer';
 
 function App() {
   return (
     <div>
       <Navbar />
-      <Dashboard />
+      <LandingPage/>
+      <Footer/>
     </div>
   );
 }

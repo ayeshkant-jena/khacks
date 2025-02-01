@@ -3,10 +3,10 @@ import React from 'react';
 const Navbar = () => {
   const navStyles = {
     width: '100%',
-    height: '120px',
+    height: 'auto',
     display: 'flex',
     alignItems: 'center',
-    padding: '0 80px',
+    // padding: '0 80px',
     backgroundColor: '#fff'
   };
 
@@ -49,11 +49,12 @@ const Navbar = () => {
     display: 'flex',
     alignItems: 'center',
     gap: '10px',
-    padding: '21px 64px',
+    padding: '5px 10px',
+    margin: '5px 5px 5px auto',
     background: '#FFED69',
     borderRadius: '100px',
     border: '2px solid #000000',
-    marginLeft: 'auto',
+    marginLeft: '5px 5px 5px auto',
     cursor: 'pointer',
     transition: 'all 0.3s ease'
   };

@@ -7,15 +7,16 @@ const CreditScoreHero = () => {
     alignItems: 'center',
     padding: '30px 0',
     width: '100%',
-    maxWidth: '1440px',
+    // maxWidth: '1440px',
     margin: '0 auto',
+    background: '#F2F6FF', // ✅ Corrected background color
   };
 
   const leftWrapperStyle = {
     display: 'flex',
     flexDirection: 'column',
     gap: '40px',
-    maxWidth: '557px',
+    maxWidth: 'full width',
   };
 
   const headingStyle = {
@@ -38,7 +39,7 @@ const CreditScoreHero = () => {
     display: 'flex',
     alignItems: 'center',
     gap: '10px',
-    padding: '21px 64px',
+    // padding: '21px 64px',
     background: '#FFED69',
     borderRadius: '100px',
     border: '2px solid #000000',
@@ -56,9 +57,9 @@ const CreditScoreHero = () => {
   };
 
   const imageStyle = {
-    width: '808px',
-    height: '715px',
-    borderRadius: '150px',
+    width: '500px',
+    height: '500px',
+    borderRadius: '150px 0px 0px 150px',
     objectFit: 'cover',
   };
 
@@ -90,7 +91,7 @@ const CreditScoreHero = () => {
           onMouseLeave={handleButtonLeave}
           onClick={() => console.log('Login button clicked')}
         >
-          <span style={buttonTextStyle}>Login And Ragister</span>
+          <span style={buttonTextStyle}>Login and Register</span> {/* ✅ Fixed typo */}
           <img 
             src="https://dashboard.codeparrot.ai/api/image/Z52_OTRi7Jes38rn/solar-ar.png" 
             alt="arrow" 
@@ -98,6 +99,7 @@ const CreditScoreHero = () => {
           />
         </button>
       </div>
+      <span></span>
       <img
         src="https://dashboard.codeparrot.ai/api/image/Z52_OTRi7Jes38rn/rectangl.png"
         alt="Credit card security"
@@ -108,4 +110,3 @@ const CreditScoreHero = () => {
 };
 
 export default CreditScoreHero;
-
