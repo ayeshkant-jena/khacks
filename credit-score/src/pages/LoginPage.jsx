@@ -173,7 +173,7 @@ const LoginPage = () => {
           </form>
 
           <RegisterText>
-            Don't have an account? <Link to="/register">Register Now</Link>
+            Don't have an account? <Link to="/TermsAndConditions">Register Now</Link>
           </RegisterText>
         </RightSection>
       </LoginCard>

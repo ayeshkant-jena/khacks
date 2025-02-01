@@ -16,7 +16,7 @@ const CreditScoreForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
       [name]: value
     }));
@@ -24,7 +24,7 @@ const CreditScoreForm = () => {
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
       [name]: files[0]
     }));
@@ -36,7 +36,7 @@ const CreditScoreForm = () => {
     const debts = parseFloat(formData.existingDebts) || 0;
 
     if (!formData.annualIncome || !formData.totalExpenses || !formData.existingDebts) {
-      setCreditScore(null); // Don't display score if any input is missing
+      setCreditScore(null);
       return;
     }
 
@@ -60,7 +60,6 @@ const CreditScoreForm = () => {
 
     setCreditScore(Math.round(finalScore));
 
-    // Set eligibility text and score color based on the credit score
     if (finalScore < 600) {
       setEligibilityText('Unfortunately, you are not eligible for a loan.');
       setScoreColor('#f44336'); // Red
@@ -162,12 +161,10 @@ const CreditScoreForm = () => {
           </div>
         </form>
 
-        {/* Display the credit score */}
         {creditScore !== null && (
           <div style={styles.scoreContainer}>
             <h3>Your Credit Score is:</h3>
             <p style={{ ...styles.creditScore, color: scoreColor }}>{creditScore}</p>
-            {/* Display eligibility text */}
             <p style={styles.eligibilityText}>{eligibilityText}</p>
           </div>
         )}
@@ -272,35 +269,38 @@ const styles = {
     borderRadius: '50px',
     display: 'flex',
     alignItems: 'center',
-    gap: '10px',
+    justifyContent: 'space-between',
     cursor: 'pointer',
+    transition: 'opacity 0.3s ease',
   },
   buttonText: {
     fontFamily: 'Poppins, sans-serif',
     fontSize: '18px',
-    fontWeight: 700,
+    fontWeight: '600',
     color: '#000000',
   },
   buttonIcon: {
-    width: '24px',
-    height: '24px',
+    width: '20px',
+    height: '20px',
   },
   scoreContainer: {
-    marginTop: '20px',
+    marginTop: '30px',
     textAlign: 'center',
   },
   creditScore: {
     fontFamily: 'Poppins, sans-serif',
-    fontSize: '40px',
-    fontWeight: 700,
+    fontSize: '48px',
+    fontWeight: '700',
+    marginTop: '10px',
   },
   eligibilityText: {
     fontFamily: 'Poppins, sans-serif',
-    fontSize: '20px',
-    fontWeight: 700,
+    fontSize: '18px',
+    fontWeight: '400',
     color: '#000000',
-    marginTop: '15px',
+    marginTop: '10px',
   },
 };
 
 export default CreditScoreForm;
+
