@@ -3,8 +3,35 @@ import { Menu, X, Home, BarChart, Settings } from "lucide-react";
 import { Bar, Line, Pie } from "react-chartjs-2";
 import axios from "axios";
 import "./Dashboard.css";
+import { useNavigate } from 'react-router-dom';
+import Navbar from "../components/Navbar";
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    LineElement,
+    PointElement,
+    ArcElement
+  } from "chart.js";
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+    LineElement,
+    PointElement,
+    ArcElement
+  );
 
 const Dashboard = () => {
+    const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [chartData, setChartData] = useState(null);
   const [lenderData, setLenderData] = useState(null);
@@ -72,7 +99,13 @@ const Dashboard = () => {
     setSelectedLender(lender);
   };
 
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
   return (
+    <div>
+        <Navbar/>
     <div className="dashboard-container">
       {/* Sidebar */}
       <div className={`sidebar ${sidebarOpen ? "open" : "closed"}`}>
@@ -84,6 +117,7 @@ const Dashboard = () => {
           <NavItem icon={Home} text="Home" />
           <NavItem icon={BarChart} text="Analytics" />
           <NavItem icon={Settings} text="Settings" />
+          <NavItem icon={Settings} onClick={handleLoginClick} text="Logout" />
         </nav>
       </div>
 
@@ -120,12 +154,12 @@ const Dashboard = () => {
             {selectedLender && (
               <div className="lender-details">
                 <h4>Lender: {selectedLender.name}</h4>
-                <p>Loan Amount: ${selectedLender.loanAmount}</p>
+                <p>Loan Amount: ₹{selectedLender.loanAmount}</p>
                 <p>Status: {selectedLender.loanStatus}</p>
                 <h5>Repayment History</h5>
                 <ul>
                   {selectedLender.repaymentHistory.map((payment, index) => (
-                    <li key={index}>Payment {index + 1}: ${payment}</li>
+                    <li key={index}>Payment {index + 1}: ₹{payment}</li>
                   ))}
                 </ul>
 
@@ -151,6 +185,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
