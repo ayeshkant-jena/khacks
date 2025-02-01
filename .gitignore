@@ -1,1 +1,103 @@
+<<<<<<< HEAD
 node_modules/
+=======
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+*.env
+*.venv
+
+# Django-related
+db.sqlite3
+*.sqlite3
+*.log
+media/
+staticfiles/
+static/
+*.pyc
+*.pyo
+migrations/*  # Ignore all migration files except __init__.py
+
+# Ignore secrets and environment files
+*.env
+config/settings/local.py  # If using different settings for local development
+
+# IDE / Editor specific files
+.vscode/
+.idea/
+*.sublime-workspace
+*.swp
+*.swo
+
+# Logs and debug files
+logs/
+debug.log
+*.log
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+
+# Ignore compiled code
+*.egg-info/
+*.egg
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore pip and dependency files
+pip-log.txt
+pip-delete-this-directory.txt
+poetry.lock
+
+# Ignore Docker-related files
+*.pid
+.vagrant/
+.vscode/
+
+# Ignore pytest cache
+.pytest_cache/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+*.mo
+*.pot
+
+# Ignore Node.js dependencies (if applicable)
+node_modules/
+npm-debug.log
+
+# Ignore deployment-related files
+*.bak
+*.swp
+*.swo
+*.orig
+
+# Ignore CI/CD build artifacts
+dist/
+build/
+*.tar.gz
+*.whl
+
+# Ignore gunicorn socket files
+gunicorn.sock
+>>>>>>> origin/version1.0
