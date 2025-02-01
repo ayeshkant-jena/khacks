@@ -79,7 +79,7 @@ const CreditScoreHero = () => {
   };
 
   const handleButtonClick = () => {
-    navigate('/register');
+    navigate('/TermsAndConditions');
   };
 
   return (
