@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'authentication',
     'api',
+    'businessApi',
 ]
 
 REST_FRAMEWORK = {

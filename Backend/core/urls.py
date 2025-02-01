@@ -27,4 +27,5 @@ urlpatterns = [
     path('protected/', views.ProtectedView.as_view(), name='protected'),
     path('auth/', include('authentication.urls')),  # Authentication app URLs
     path('api/', include('api.urls')),  # Authentication app URLs
+    path('api/business/', include('businessApi.urls')),  
 ]
