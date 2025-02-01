@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import BusinessInfo
+from .models import *
 
 class BusinessInfoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,3 +30,8 @@ class BusinessInfoSerializer(serializers.ModelSerializer):
         if BusinessInfo.objects.filter(contact_email=email).exists():
             raise serializers.ValidationError({"contact_email": "A business with this email already exists."})
         return data
+
+class ExternalDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ExternalData
+        fields = '__all__'

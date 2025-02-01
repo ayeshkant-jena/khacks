@@ -9,4 +9,5 @@ urlpatterns = [
     # ✅ FIXED: Removed "api/" prefix
     path('business/', BusinessListCreateView.as_view(), name='business-list-create'),
     path('business/<int:pk>/', BusinessDetailView.as_view(), name='business-detail'),
+    path("business/<int:business_id>/upload-document/", UploadBusinessDocumentView.as_view(), name="upload-business-document"),
 ]
