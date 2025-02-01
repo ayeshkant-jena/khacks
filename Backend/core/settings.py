@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'authentication',
-    'api',
+    'api',  
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -57,6 +58,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     
 ]
 
@@ -80,6 +83,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -88,8 +93,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "khacks",  # The name of your database
-        "USER": "mydbuser",  # The name of your PostgreSQL user
-        "PASSWORD": "123",  # The password for your PostgreSQL user
+        "USER": "postgres",  # The name of your PostgreSQL user
+        "PASSWORD": "Atharv@7",  # The password for your PostgreSQL user
         "HOST": "127.0.0.1",  # Use the IP address of your PostgreSQL server
         "PORT": "5432",  # Default PostgreSQL port
     }
