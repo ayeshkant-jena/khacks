@@ -192,3 +192,37 @@ input::placeholder {
         font-size: 12px;
     }
 }
+
+.lender-section {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .lender-section select {
+    margin: 20px 0;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .lender-details {
+    margin-top: 20px;
+  }
+  
+  .lender-details h4 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .lender-details ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .lender-details li {
+    margin: 5px 0;
+  }
+  
