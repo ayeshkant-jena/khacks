@@ -1,0 +1,228 @@
+/* Overall Container */
+.registration-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f6f9;
+    padding: 20px;
+}
+
+/* Registration Box */
+.registration-box {
+    display: flex;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 1200px;
+    overflow: hidden;
+}
+
+/* Left Section - Image */
+.image-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f2f6ff;
+}
+
+.image-section img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Right Section - Form */
+.form-section {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.register-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #000000;
+}
+
+/* Input Fields */
+.input-group {
+    display: flex;
+    align-items: center;
+    background: #eef2f5;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+/* Icons inside Inputs */
+.input-icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+
+/* Responsive Input Fields */
+input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    padding: 8px;
+    outline: none;
+    flex: 1;
+}
+
+/* Placeholder Styling */
+input::placeholder {
+    color: #555;
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+/* Register Button */
+.register-button {
+    width: 100%;
+    padding: 12px;
+    background: #FFED69;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.register-button:hover {
+    background: #ffdb4d;
+}
+
+/* Login Link */
+.login-link {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-top: 15px;
+}
+
+.login-link a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .registration-box {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .image-section {
+        display: none; /* Hides image on smaller screens */
+    }
+
+    .form-section {
+        width: 100%;
+        max-width: 500px;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-section {
+        padding: 15px;
+    }
+
+    .register-header h1 {
+        font-size: 28px;
+    }
+
+    .input-group {
+        padding: 10px;
+    }
+
+    input {
+        font-size: 16px;
+        padding: 6px;
+    }
+
+    .register-button {
+        font-size: 16px;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .registration-container {
+        padding: 10px;
+    }
+
+    .register-header h1 {
+        font-size: 24px;
+    }
+
+    .input-group {
+        padding: 8px;
+    }
+
+    input {
+        font-size: 14px;
+        padding: 5px;
+    }
+
+    .register-button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .login-link {
+        font-size: 12px;
+    }
+}
+
+.lender-section {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .lender-section select {
+    margin: 20px 0;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .lender-details {
+    margin-top: 20px;
+  }
+  
+  .lender-details h4 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .lender-details ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .lender-details li {
+    margin: 5px 0;
+  }
+  

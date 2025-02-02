@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+node_modules/
+=======
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -97,3 +100,4 @@ build/
 
 # Ignore gunicorn socket files
 gunicorn.sock
+>>>>>>> origin/version1.0
