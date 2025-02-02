@@ -7,6 +7,8 @@ SCALER_PATH = os.path.join('api', 'models', 'lr_scaler.pkl')
 
 CREDIT_SCORE_MODEL_PATH = os.path.join('api', 'models', 'predict_credit_score.pkl')
 
+FRAUD_DETECTION_MODEL_PATH = os.path.join('api', 'models', 'fraud_detection_model.pkl')
+
 # Load the model and scaler
 def load_loan_repayment_finder_model():
     model = joblib.load(MODEL_PATH)
@@ -19,3 +21,7 @@ def load_lr_scaler():
 def load_credit_score_model():
     model = joblib.load(CREDIT_SCORE_MODEL_PATH)
     return model
+
+def load_fraud_detection_model():
+    model = joblib.load(FRAUD_DETECTION_MODEL_PATH)
+    return  model
