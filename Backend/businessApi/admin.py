@@ -11,18 +11,36 @@ except admin.sites.NotRegistered:
     pass  # Do nothing if it's not registered
 
 class BusinessAdmin(admin.ModelAdmin):
-    list_display = ("name", "credit_score_chart", "income_trend_chart", "business_health_chart")
-    readonly_fields = ("credit_score_chart", "income_trend_chart", "business_health_chart")
+    list_display = ("name", "credit_score", "total_income")  
+    readonly_fields = ("display_credit_score_chart", "display_income_trend_chart", "display_business_health_chart")
 
     class Media:
-        js = ('https://cdn.jsdelivr.net/npm/chart.js',)  # Load Chart.js from CDN
+        js = ["https://cdn.jsdelivr.net/npm/chart.js"]
 
+    def credit_score(self, obj):
+        external_data = ExternalData.objects.filter(business=obj).first()
+        return external_data.credit_score if external_data else "No Data"
+
+    def total_income(self, obj):
+        total_income = IncomeExpense.objects.filter(business=obj).aggregate(Sum("income"))["income__sum"]
+        return total_income or 0
+
+    # Readonly fields displaying charts
+    def display_credit_score_chart(self, obj):
+        return self.credit_score_chart(obj)
+
+    def display_income_trend_chart(self, obj):
+        return self.income_trend_chart(obj)
+
+    def display_business_health_chart(self, obj):
+        return self.business_health_chart(obj)
+
+    # Credit Score Chart
     def credit_score_chart(self, obj):
         external_data = ExternalData.objects.filter(business=obj).first()
         if not external_data:
             return "No Data"
-        
-        # Convert Decimal to float safely using json.dumps
+
         return mark_safe(f"""
             <div style="width:100%; max-width:250px; height:250px;">
                 <canvas id="creditChart-{obj.id}"></canvas>
@@ -49,6 +67,7 @@ class BusinessAdmin(admin.ModelAdmin):
             </script>
         """)
 
+    # Income Trend Chart
     def income_trend_chart(self, obj):
         income_data = (
             IncomeExpense.objects.filter(business=obj)
@@ -90,6 +109,7 @@ class BusinessAdmin(admin.ModelAdmin):
             </script>
         """)
 
+    # Business Health Chart
     def business_health_chart(self, obj):
         external_data = ExternalData.objects.filter(business=obj).first()
         financial_records = (
@@ -159,10 +179,4 @@ class BusinessAdmin(admin.ModelAdmin):
             </script>
         """)
 
-# Register BusinessAdmin
-admin.site.register(BusinessInfo, BusinessAdmin)
-
-# Set Admin Site Branding
-admin.site.site_header = "Business Insights Dashboard"
-admin.site.site_title = "Business Insights"
-admin.site.index_title = "Business Data Visualization"
+admin.site.register(BusinessInfo, BusinessAdmin)  # ✅ Register only once
