@@ -15,3 +15,4 @@ class UserDetails(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.user.username}) - {self.role}"
+
