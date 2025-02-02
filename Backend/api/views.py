@@ -20,6 +20,41 @@ from django.shortcuts import get_object_or_404
 def home(request):
     return HttpResponse("Welcome to the Credit Score Prediction API!")
 
+class FraudDetection(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response({'message': 'This is the Fraud Detection endpoint!'}, status=status.HTTP_200_OK)
+    
+    def post(self, request):
+        try:
+            input_data = request.data
+
+            input_features = ['step', 'type', 'amount', 'oldbalanceOrg', 'newbalanceOrig', 
+            'oldbalanceDest', 'newbalanceDest', 'transaction_ratio']
+
+
+            # Convert input JSON to DataFrame with proper column names
+            input_df = pd.DataFrame([input_data], columns=input_features)
+
+        except KeyError as e:
+            return Response({'error': f'Missing feature: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': f'Error processing input data: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # Load the model
+            model = load_fraud_detection_model()
+
+            # Predict using the trained model
+            prediction = model.predict(input_df)
+
+            return Response({'prediction': int(prediction[0])}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({'error': f'Prediction error: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 class PredictCreditScore(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
@@ -236,3 +271,4 @@ class UploadBusinessDocumentView(APIView):
         import re
         match = re.search(rf"{label}:\s*\$?([\d,]+\.?\d*)", text)
         return float(match.group(1).replace(",", "")) if match else None
+
